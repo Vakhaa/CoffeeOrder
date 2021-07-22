@@ -1,13 +1,13 @@
 //import './App.css';
 
-let Header = ({ name }) => {
+let Header = ({ name, onClick }) => {
   return (
       <div className="Header">
           <p>
               {name ? name : "You are guest. Please, log in."}
           </p>
-          <button>
-              Log in
+          <button onClick={() => onClick()}>
+              {name ? "Log out":  "Log in"}
           </button>
     </div>
   );

@@ -1,49 +1,62 @@
 import {
-    /*GET_PROFILE_REQUEST,
-    GET_PROFILE_SUCCESS,
-    GET_PROFILE_ERROR,*/
-}
-    from './actionTypes'
+    GET_PRODUCTS_REQUEST,
+    GET_PRODUCTS_RECEIVE,
+    GET_PRODUCTS_ERROR
+}from './actionTypes'
 
 //import { profilesAPI } from '../../DAL/profile-api'
 
-/*export function requestProfile() {
+let requestProducts = () => {
     return {
-        type: GET_PROFILE_REQUEST,
+        type: GET_PRODUCTS_REQUEST
     }
 }
 
-export function receiveProfile(item) {
+export function receiveProducts(item) {
     return {
-        type: GET_PROFILE_SUCCESS,
-        profile: item
+        type: GET_PRODUCTS_RECEIVE,
+        products: item
     }
 }
 
-export function errorProfile(error) {
+export function errorProducts(error) {
     return {
-        type: GET_PROFILE_ERROR,
+        type: GET_PRODUCTS_ERROR,
         error: error
     }
 }
 
-*/
+let products = [
+    {
+        id: 1,
+        name: "Americano",
+        price: 19
+    },
+    {
+        id: 2,
+        name: "Cappuccino",
+        price: 20
+    },
+    {
+        id: 3,
+        name: "Espresso",
+        price: 25
+    }
+]
+
 
 export function getProducts() {
     return async (dispatch) => {
-        dispatch(requestProfile())
+        
+        dispatch(requestProducts());
 
         try {
             //let response = await profilesAPI.getProfile(id);
-
-            //dispatch(receiveProfile(response.data))
+            
+            //dispatch(receiveProducts(response.data))
+            dispatch(receiveProducts(products))
         } catch (error) {
-
-            /*if (error.response.status === 401) {
-                dispatch(getRefreshToken());
-            }
-
-            dispatch(errorProfile(error))*/
+            dispatch(errorProducts(error));
         }
     }
 }

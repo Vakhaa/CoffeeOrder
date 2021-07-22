@@ -1,18 +1,20 @@
-//import './App.css';
+import '../../index.css';
 
-let Menu = ({products}) => {
+let Menu = ({ products, addProduct, userId}) => {
   return (
       <div className="Menu">
           <p>Menu</p>
-          <br/>
+          <div className="container">
           {
-              products.map( product => (
-                  <div key={product.id}>
-                      <p>{product.name}</p> . <p>{product.price}</p>
-                      <button>+</button>
+
+                  products.map((product) => (
+                  <div className="product" key={product.id}>
+                      {product.name}  {product.price}
+                      <button onClick={() => addProduct(userId, product.id)} >+</button>
                   </div>
               ))
-          }
+              }
+          </div>
     </div>
   );
 }

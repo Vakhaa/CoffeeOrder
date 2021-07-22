@@ -1,57 +1,29 @@
 import {
-    /*GET_PROFILE_REQUEST,
-    GET_PROFILE_SUCCESS,
-    GET_PROFILE_ERROR,
-    GET_PROFILES_REQUEST,
-    GET_PROFILES_SUCCESS,
-    GET_PROFILES_ERROR,*/
+    GET_PRODUCTS_REQUEST,
+    GET_PRODUCTS_RECEIVE,
+    GET_PRODUCTS_ERROR
 } from '../Actions/actionTypes'
 
-const initialState = {
-    currentProfileId: 0,
-    profile: null,
-    profiles: null,
-    fetching: false
-}
+
+const initialState =[]
 
 
 export default function productsReducer(state = initialState, action) {
     switch (action.type) {
-        /*case GET_PROFILE_REQUEST:
+        case GET_PRODUCTS_REQUEST:
             return {
-                ...state,
-                fetching: true
+                ...state
             }
-        case GET_PROFILE_SUCCESS:
+        case GET_PRODUCTS_RECEIVE:
             return {
                 ...state,
-                profile: action.profile,
-                fetching: false
+                products: action.products
             }
-        case GET_PROFILE_ERROR:
+        case GET_PRODUCTS_ERROR:
             return {
                 ...state,
-                error: action.error,
-                fetching: false
+                error: action.error
             }
-
-        case GET_PROFILES_REQUEST:
-            return {
-                ...state,
-                fetching: true
-            }
-        case GET_PROFILES_SUCCESS:
-            return {
-                ...state,
-                profiles: profiles,
-                fetching: false
-            }
-        case GET_PROFILES_ERROR:
-            return {
-                ...state,
-                error: action.error,
-                fetching: false
-            }*/
         default:
             return state
     }

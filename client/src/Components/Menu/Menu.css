@@ -1,0 +1,31 @@
+/*.Menu {
+  text-align: center;
+}
+*/
+.Menu {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+    background: gold;
+}
+
+.container {
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.product {
+    flex-direction: column;
+}
+
+.App-link {
+  color: #61dafb;
+}
+

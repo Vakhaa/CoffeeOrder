@@ -1,24 +1,28 @@
-//import './App.css';
+import '../../index.css';
 
-let Order = ({products}) => {
+let Order = (props) => {
   return (
       <div className="Order">
           <p>Order</p>
-          <br />
+          <div className="container">
           {
-              products.map( product => (
-                  <div key={product.id}>
-                      <button>x</button>
-                      <p>{product.name}</p>
+              props.products.map( product => (
+                  <div className="product" key={product.id}>
+                      <button onClick={() => props.deleteProduct(1, product.id)}>x</button>
 
-                      <button>-</button> <p>{product.count}</p> <button>+</button>
+                      {product.name}
 
-                      <p>{product.price}</p>
-                      <p>{product.price}</p>
+                      <button onClick={() => props.changeCount(1, product.id, false)}>-</button>
+                      {product.count}
+                      <button onClick={() => props.changeCount(1, product.id, true)}>+</button>
+
+                      {product.price}
+                      
                   </div>
               ))
           }
-          <button>Cancel</button> <button>Submit</button>
+              <button onClick={() => props.cancelOrder(1)}>Cancel</button> <button onClick={() => props.submitOrder(1)}>Submit</button>
+          </div>
     </div>
   );
 }
