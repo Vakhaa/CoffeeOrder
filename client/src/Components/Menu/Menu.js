@@ -1,6 +1,6 @@
 import '../../index.css';
 
-let Menu = ({ products, addProduct, userId}) => {
+let Menu = ({ products, addProduct, userId, isEditMode}) => {
   return (
       <div className="Menu">
           <p>Menu</p>
@@ -9,8 +9,8 @@ let Menu = ({ products, addProduct, userId}) => {
 
                   products.map((product) => (
                   <div className="product" key={product.id}>
-                      {product.name}  {product.price}
-                      <button onClick={() => addProduct(userId, product.id)} >+</button>
+                          {product.title}  {product.price}
+                          <button onClick={() => addProduct(userId, product.id)} disabled={!isEditMode}>+</button>
                   </div>
               ))
               }

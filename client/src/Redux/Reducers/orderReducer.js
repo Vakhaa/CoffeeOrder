@@ -9,7 +9,8 @@ import {
 
     SUBMIT_ORDER_REQUEST,
     SUBMIT_ORDER_RECEIVE,
-    SUBMIT_ORDER_ERROR
+    SUBMIT_ORDER_ERROR,
+    CLEAN_ORDER
 } from '../Actions/actionTypes'
 
 
@@ -18,6 +19,10 @@ const initialState = []
 
 export default function orderReducer(state = initialState, action) {
     switch (action.type) {
+        case CLEAN_ORDER:
+            return {
+                order: null
+            }
         case GET_ORDER_REQUEST:
             return {
                 ...state

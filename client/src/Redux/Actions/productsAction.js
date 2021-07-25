@@ -4,7 +4,9 @@ import {
     GET_PRODUCTS_ERROR
 }from './actionTypes'
 
-//import { profilesAPI } from '../../DAL/profile-api'
+import firebase from '../../DAL/Firebase';
+
+const db = firebase;
 
 let requestProducts = () => {
     return {
@@ -26,24 +28,6 @@ export function errorProducts(error) {
     }
 }
 
-let products = [
-    {
-        id: 1,
-        name: "Americano",
-        price: 19
-    },
-    {
-        id: 2,
-        name: "Cappuccino",
-        price: 20
-    },
-    {
-        id: 3,
-        name: "Espresso",
-        price: 25
-    }
-]
-
 
 export function getProducts() {
     return async (dispatch) => {
@@ -51,10 +35,10 @@ export function getProducts() {
         dispatch(requestProducts());
 
         try {
-            //let response = await profilesAPI.getProfile(id);
+            const products = db.ref('Products');
+
+            products.on('value', (elem) => dispatch(receiveProducts(elem.val())));
             
-            //dispatch(receiveProducts(response.data))
-            dispatch(receiveProducts(products))
         } catch (error) {
             dispatch(errorProducts(error));
         }

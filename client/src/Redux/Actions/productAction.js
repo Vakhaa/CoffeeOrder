@@ -12,7 +12,10 @@ import {
     CHANGE_COUNT_PRODUCT_INTO_ORDER_ERROR
 } from './actionTypes'
 
-//import { profilesAPI } from '../../DAL/profile-api'
+import firebase from '../../DAL/Firebase';
+
+const db = firebase;
+
 
 export function requestAddProduct() {
     return {
@@ -69,7 +72,7 @@ export function errorChangeProductCount(error) {
     return {
         type: CHANGE_COUNT_PRODUCT_INTO_ORDER_ERROR,
         error: error
-    }
+    }   
 }
 
 
@@ -78,9 +81,19 @@ export function addProduct(userId, productId) {
         dispatch(requestAddProduct());
 
         try {
-            //let response = await profilesAPI.getProfile(id);
 
-            //dispatch(receiveAddProduct())
+            let order = {
+                isSubmit: false,
+                userId: userId,
+                Products: {
+                    productId: productId,
+                }
+                //count:1
+            }
+
+            db.ref('Order').push(order);   
+
+            dispatch(receiveAddProduct());
         } catch (error) {
 
             dispatch(errorAddProduct(error));
@@ -88,7 +101,7 @@ export function addProduct(userId, productId) {
     }
 }
 
-export function deleteProduct(id) {
+export function deleteProduct(userId, productId) {
     return async (dispatch) => {
         dispatch(requestDeleteProduct());
 
@@ -103,14 +116,14 @@ export function deleteProduct(id) {
     }
 }
 
-export function changeProductCount(id) {
+export function changeProductCountIntoOrder(userId, productId, isIncreased) {
     return async (dispatch) => {
         dispatch(requestChangeProductCount());
 
         try {
             //let response = await profilesAPI.getProfile(id);
 
-            //dispatch(receiveAddProduct())
+            dispatch(receiveChangeProductCount())
         } catch (error) {
 
             dispatch(errorChangeProductCount(error));

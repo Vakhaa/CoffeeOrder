@@ -5,11 +5,16 @@ import {
 
     LOGOUT_REQUEST,
     LOGOUT_RECEIVE,
-    LOGOUT_ERROR
+    LOGOUT_ERROR,
+
+    CLEAN_ORDER
 }
     from './actionTypes'
 
-//import { profilesAPI } from '../../DAL/profile-api'
+import firebase from 'firebase';
+
+var provider = new firebase.auth.GoogleAuthProvider();
+
 
 export function requestLogin() {
     return {
@@ -44,15 +49,16 @@ export function receiveLogout() {
     }
 }
 
+export function cleanOrder() {
+    return {
+        type: CLEAN_ORDER
+    }
+}
+
 export function errorLogout() {
     return {
         type: LOGOUT_ERROR
     }
-}
-
-let profile = {
-    id: 1,
-    name: "Sub Zero"
 }
 
 export function login() {
@@ -60,9 +66,11 @@ export function login() {
         dispatch(requestLogin());
 
         try {
-            //let response = await profilesAPI.getProfile(id);
+            
+            let response = await firebase.auth().signInWithPopup(provider);
+            
+            dispatch(successLogin(response.additionalUserInfo.profile))
 
-            dispatch(successLogin(profile))
         } catch (error) {
 
             dispatch(errorLogin(error));
@@ -75,9 +83,10 @@ export function logout() {
         dispatch(requsetLogout());
 
         try {
-            //let response = await profilesAPI.getProfile(id);
+            firebase.auth().signOut();
 
-            dispatch(receiveLogout())
+            dispatch(cleanOrder());
+            dispatch(receiveLogout());
         } catch (error) {
 
             dispatch(errorLogout(error));

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useEffect } from 'react';
 import { connect } from 'react-redux'
 import { compose } from 'redux'
@@ -7,20 +8,29 @@ import { getProducts } from '../Redux/Actions/productsAction';
 
 const MenuContainer = (props) => {
 
+    let [isLogin, setIsLogin] = useState(false);
+    let [products, setProducts] = useState(props.products);
+
     useEffect(() => {
-        props.getProducts();
+        setProducts(props.products);
     }, [props.products]);
 
-    const menu = () => <Menu products={props.products} addProduct={props.addProduct} userId={1} />;
+    useEffect(() => {
+        props.getProducts();
+        setIsLogin(props.profile ? true : false);
+    }, [props.profile]);
+
+    const menu = () => <Menu products={products} addProduct={props.addProduct} userId={props.profile ? props.profile.id : 0} isEditMode={isLogin} />;
 
     const loading = () => <>Loading</>;
 
-    return !props.products ? loading() : menu();
+    return !products ? loading() : menu();
 }
 
 const mapStateToProps = state => {
     return {
-        products: state.products.products
+        products: state.products.products,
+        profile: state.login.profile
     }
 }
 

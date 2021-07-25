@@ -5,7 +5,7 @@ import {
 
     LOGOUT_REQUEST,
     LOGOUT_RECEIVE,
-    LOGOUT_ERROR
+    LOGOUT_ERROR,
 } from '../Actions/actionTypes'
 
 
@@ -34,7 +34,7 @@ export default function loginReducer(state = initialState, action) {
             }
         case LOGOUT_RECEIVE:
             return {
-                state: null
+                profile: null
             }
         case LOGOUT_ERROR:
             return {

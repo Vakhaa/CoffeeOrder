@@ -5,8 +5,8 @@ import { login, logout } from '../Redux/Actions/loginAction';
 
 const HeaderContainer = (props) => {
 
-    return props.profile ? <Header name={props.profile.name} onClick={props.logout} /> 
-        : <Header onClick={props.login} />;
+    return !props.profile? <Header onClick={props.login} /> :
+        <Header name={props.profile.name} onClick={props.logout} /> ;
 }
 
 const mapStateToProps = state => {

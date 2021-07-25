@@ -1,4 +1,3 @@
-//import './App.css';
 
 let Header = ({ name, onClick }) => {
   return (

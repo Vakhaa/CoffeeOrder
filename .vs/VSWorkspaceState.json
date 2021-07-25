@@ -1,7 +1,16 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\client",
+    "\\client\\src",
+    "\\client\\src\\Components",
+    "\\client\\src\\Components\\Menu",
+    "\\client\\src\\Components\\Order",
+    "\\client\\src\\Containers",
+    "\\client\\src\\Redux",
+    "\\client\\src\\Redux\\Actions",
+    "\\client\\src\\Redux\\Reducers"
   ],
-  "SelectedNode": "\\CoffeeOrder.sln",
+  "SelectedNode": "\\client\\src\\Redux\\Actions\\productAction.js",
   "PreviewInSolutionExplorer": false
 }
