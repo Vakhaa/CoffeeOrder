@@ -10,12 +10,35 @@ import {
     SUBMIT_ORDER_REQUEST,
     SUBMIT_ORDER_RECEIVE,
     SUBMIT_ORDER_ERROR,
+
+    CLEAN_ORDER,
+    CREATE_ORDER,
+    ORDER_EXISTS
 }
     from './actionTypes'
 
 import firebase from '../../DAL/Firebase';
 
 const db = firebase;
+
+export function cleanOrder() {
+    return {
+        type: CLEAN_ORDER
+    }
+}
+
+export function createOrderSuccess() {
+    return {
+        type: CREATE_ORDER
+    }
+}
+
+export function existsOrder() {
+    return {
+        type: ORDER_EXISTS
+    }
+}
+
 
 export function requestGetOrder() {
     return {
@@ -75,33 +98,53 @@ export function errorSubmitOrder(error) {
     }
 }
 
+export function createOrder(userId) {
+    return (dispatch) => {
+
+        const order = db.ref('Order');
+
+        var userOrder = order.orderByChild("userId").equalTo(userId);
+
+        console.log(userOrder);
+        console.log("userOrder");
+
+        if(userOrder){
+            dispatch(existsOrder());
+            return
+        }
+        
+        let newOrder = {
+            isSubmit: false,
+            userId: userId,            
+        }
+
+        db.ref('Order').push(newOrder);
+
+        dispatch(createOrderSuccess());
+    }
+}
+
 export function getOrder(userId) {
     return async (dispatch) => {
         dispatch(requestGetOrder());
 
         try {
-            //let handlesOrder = [];
             
             const order = db.ref('Order');
 
             order.orderByChild("userId").equalTo(userId).on(
                 'child_added', snap => {
 
-                    //handlesOrder.push(snap.val());
-                    let product = db.ref('Products/' + snap.key);
-                    product.once('value').then(productSnap => {
-                        /*let response = handlesOrder.map(order => {
-                            return {
-                                ...order,
-                                Products: [productSnap.val()]
-                            }
-                        })*/
+                    let products = db.ref('Products');
+                    
+                    products.on('value', productsSnap => {
+
                         let data = {
                             ...snap.val(),
-                            Products: [productSnap.val()].map(product => (
-                                product = {
-                                    ...product,
-                                    count: snap.val().Products[Object.keys(snap.val().Products).find(productId => product.id == productId)]
+                            Products: snap.val().Products.map(productOrder => (
+                                productOrder = {
+                                    ...productsSnap.val().find(product => productOrder?.productId == product?.id),
+                                    count: productOrder.count
                                 }
                             ))
                         }

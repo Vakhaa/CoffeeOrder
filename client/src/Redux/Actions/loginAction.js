@@ -7,11 +7,11 @@ import {
     LOGOUT_RECEIVE,
     LOGOUT_ERROR,
 
-    CLEAN_ORDER
 }
     from './actionTypes'
 
 import firebase from 'firebase';
+import { cleanOrder, createOrder } from './orderAction';
 
 var provider = new firebase.auth.GoogleAuthProvider();
 
@@ -49,12 +49,6 @@ export function receiveLogout() {
     }
 }
 
-export function cleanOrder() {
-    return {
-        type: CLEAN_ORDER
-    }
-}
-
 export function errorLogout() {
     return {
         type: LOGOUT_ERROR
@@ -68,7 +62,9 @@ export function login() {
         try {
             
             let response = await firebase.auth().signInWithPopup(provider);
-            
+
+            dispatch(createOrder(response.additionalUserInfo.profile.id));
+
             dispatch(successLogin(response.additionalUserInfo.profile))
 
         } catch (error) {

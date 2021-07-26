@@ -10,7 +10,7 @@ let Order = (props) => {
                   props.order ? props.order.Products.map(product => (
                       <div className="product" key={product.id}>
                           <button onClick={() => props.deleteProduct(props.profile.id, product.id)}>x</button>
-                          {console.log(product)}
+                          
                           {product.title}
 
                           <button onClick={() => props.changeCount(props.profile.id, product.id, false)}>-</button>

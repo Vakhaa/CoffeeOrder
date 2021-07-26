@@ -82,16 +82,16 @@ export function addProduct(userId, productId) {
 
         try {
 
-            let order = {
-                isSubmit: false,
-                userId: userId,
-                Products: {
-                    productId: productId,
-                }
-                //count:1
+            const order = db.ref('Order');
+
+            order.orderByChild("userId").equalTo(userId).push(product)
+
+            let product = {
+                productId: productId,
+                count: 1
             }
 
-            db.ref('Order').push(order);   
+            db.ref('Order/Products/').push(product);   
 
             dispatch(receiveAddProduct());
         } catch (error) {

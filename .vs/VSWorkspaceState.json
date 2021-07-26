@@ -4,13 +4,14 @@
     "\\client",
     "\\client\\src",
     "\\client\\src\\Components",
-    "\\client\\src\\Components\\Menu",
     "\\client\\src\\Components\\Order",
     "\\client\\src\\Containers",
+    "\\client\\src\\DAL",
+    "\\client\\src\\DAL\\Firebase",
     "\\client\\src\\Redux",
     "\\client\\src\\Redux\\Actions",
     "\\client\\src\\Redux\\Reducers"
   ],
-  "SelectedNode": "\\client\\src\\Redux\\Actions\\productAction.js",
+  "SelectedNode": "\\client\\src\\Redux\\Actions\\orderAction.js",
   "PreviewInSolutionExplorer": false
 }
