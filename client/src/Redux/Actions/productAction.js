@@ -13,6 +13,7 @@ import {
 } from './actionTypes'
 
 import firebase from '../../DAL/Firebase';
+import { getOrder } from './orderAction';
 
 const db = firebase;
 
@@ -84,16 +85,27 @@ export function addProduct(userId, productId) {
 
             const order = db.ref('Order');
 
-            order.orderByChild("userId").equalTo(userId).push(product)
-
-            let product = {
+            let newProduct = {
                 productId: productId,
                 count: 1
             }
+            
+            order.orderByChild("userId").equalTo(userId).once(
+                'child_added', snap => {
+                    
+                    let products = db.ref('Order/' + snap.key + '/Products');
 
-            db.ref('Order/Products/').push(product);   
+                    products.once('value', snapProducts => {
+
+                        let newProducts = snapProducts.val() ? [...snapProducts.val(), newProduct] : [newProduct];
+
+                        db.ref('Order/' + snap.key).child('Products').set(newProducts);
+                    });
+                }
+            );
 
             dispatch(receiveAddProduct());
+            dispatch(getOrder(userId));
         } catch (error) {
 
             dispatch(errorAddProduct(error));
@@ -106,9 +118,24 @@ export function deleteProduct(userId, productId) {
         dispatch(requestDeleteProduct());
 
         try {
-            //let response = await profilesAPI.getProfile(id);
+            const order = db.ref('Order');
+            
+            order.orderByChild("userId").equalTo(userId).on(
+                'child_added', snap => {
+                    
+                    let products = db.ref('Order/' + snap.key + '/Products');
 
-            //dispatch(receiveAddProduct())
+                    products.once('value', snapProducts => {
+
+                        let newProducts = snapProducts.val().filter(item => item.productId != productId);
+
+                        db.ref('Order/' + snap.key).child('Products').set(newProducts);
+                    });
+                }
+            );
+
+            dispatch(deleteProduct());
+            dispatch(getOrder(userId));
         } catch (error) {
 
             dispatch(errorDeleteProduct(error));

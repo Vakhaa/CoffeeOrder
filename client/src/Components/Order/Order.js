@@ -7,7 +7,7 @@ let Order = (props) => {
           <p>Order</p>
           <div className="container">
               {
-                  props.order ? props.order.Products.map(product => (
+                  props.order?.Products ? props.order.Products.map(product => (
                       <div className="product" key={product.id}>
                           <button onClick={() => props.deleteProduct(props.profile.id, product.id)}>x</button>
                           

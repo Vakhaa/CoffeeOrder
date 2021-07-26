@@ -102,23 +102,28 @@ export function createOrder(userId) {
     return (dispatch) => {
 
         const order = db.ref('Order');
-
-        var userOrder = order.orderByChild("userId").equalTo(userId);
-
-        console.log(userOrder);
-        console.log("userOrder");
-
-        if(userOrder){
-            dispatch(existsOrder());
-            return
-        }
         
-        let newOrder = {
-            isSubmit: false,
-            userId: userId,            
-        }
+        order.on('value', snapOrders => {
 
-        db.ref('Order').push(newOrder);
+            var userOrder = order.orderByChild("userId").equalTo(userId);
+
+            userOrder.once('value', snap => {
+
+                if (snap.val()) {
+                    dispatch(existsOrder());
+                } else {
+
+                    let newOrder = [...snapOrders.val(), {
+                            isSubmit: false,
+                            userId: userId,
+                        }]
+
+                    order.set(newOrder);
+                }
+            });
+
+
+        });
 
         dispatch(createOrderSuccess());
     }
@@ -141,7 +146,7 @@ export function getOrder(userId) {
 
                         let data = {
                             ...snap.val(),
-                            Products: snap.val().Products.map(productOrder => (
+                            Products: snap.val()?.Products?.map(productOrder => (
                                 productOrder = {
                                     ...productsSnap.val().find(product => productOrder?.productId == product?.id),
                                     count: productOrder.count
@@ -165,9 +170,17 @@ export function cancelOrder(userId) {
         dispatch(requestCancelOrder());
 
         try {
-            //let response = await profilesAPI.getProfile(id);
+            const order = db.ref('Order');
 
+            order.orderByChild("userId").equalTo(userId).once(
+                'child_added', snap => {
+                    if (snap.val()) db.ref('Order/' + snap.key).remove();
+                }
+            );
+
+            dispatch(getOrder(userId));
             dispatch(receiveCancelOrder())
+
         } catch (error) {
 
             dispatch(errorCancelOrder(error));
