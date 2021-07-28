@@ -7,21 +7,28 @@ import { changeProductCountIntoOrder, deleteProduct} from '../Redux/Actions/prod
 
 const OrderContainer = (props) => {
 
-    //total count
-
     let [order, setOrder] = useState(props.order);
 
     useEffect(() => {
         setOrder(props.order);
     }, [props.order]);
 
+    let [totalPrice, setTotalPrice] = useState(0);
 
     useEffect(() => {
-        
+        let total = 0;
+        order?.Products?.map(product => (
+            total += product.count * product.price
+        ));
+        setTotalPrice(total);
+    }, [order?.Products]);
+
+
+    useEffect(() => {
         if (props.profile ? true : false) props.getOrder(props.profile.id);
     }, [props.profile]);
 
-    return <Order order={order}
+    return <Order order={order} totalPrice={totalPrice}
         submitOrder={props.submitOrder} cancelOrder={props.cancelOrder}
         changeCount={props.changeCount} deleteProduct={props.deleteProduct}
         isEditMode={props.profile ? true : false} profile={props.profile}

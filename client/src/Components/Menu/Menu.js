@@ -10,7 +10,7 @@ let Menu = ({ products, addProduct, userId, isEditMode}) => {
                   products.map((product) => (
                   <div className="product" key={product.id}>
                           {product.title}  {product.price}
-                          <button onClick={() => addProduct(userId, product.id)} disabled={!isEditMode}>+</button>
+                          <button onClick={() => addProduct(userId, product.id)} disabled={!isEditMode || product.isInOrder}>+</button>
                   </div>
               ))
               }

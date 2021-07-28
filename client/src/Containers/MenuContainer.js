@@ -16,6 +16,17 @@ const MenuContainer = (props) => {
     }, [props.products]);
 
     useEffect(() => {
+
+        let newProducts = products?.map(product => (
+            product = {
+                ...product,
+                isInOrder: props.order?.Products?.find(orderProduct => orderProduct.id === product.id) ? true : false 
+            }));
+
+        setProducts(newProducts);
+    }, [props.order]);
+
+    useEffect(() => {
         props.getProducts();
         setIsLogin(props.profile ? true : false);
     }, [props.profile]);
@@ -30,6 +41,7 @@ const MenuContainer = (props) => {
 const mapStateToProps = state => {
     return {
         products: state.products.products,
+        order: state.order.order,
         profile: state.login.profile
     }
 }

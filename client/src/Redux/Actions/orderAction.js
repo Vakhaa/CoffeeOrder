@@ -148,7 +148,7 @@ export function getOrder(userId) {
                             ...snap.val(),
                             Products: snap.val()?.Products?.map(productOrder => (
                                 productOrder = {
-                                    ...productsSnap.val().find(product => productOrder?.productId == product?.id),
+                                    ...productsSnap.val().find(product => productOrder?.productId === product?.id),
                                     count: productOrder.count
                                 }
                             ))

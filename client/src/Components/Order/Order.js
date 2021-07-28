@@ -21,7 +21,8 @@ let Order = (props) => {
 
                       </div>
                   )) :"Empty"
-          }
+              }
+              <div>Total : {props.totalPrice}</div>
               <button onClick={() => props.cancelOrder(props.profile.id)} disabled={!props.isEditMode}> Cancel </button>
               <button onClick={() => props.submitOrder(props.profile.id)} disabled={!props.isEditMode}> Submit </button>
           </div>

@@ -127,7 +127,7 @@ export function deleteProduct(userId, productId) {
 
                     products.once('value', snapProducts => {
 
-                        let newProducts = snapProducts.val().filter(item => item.productId != productId);
+                        let newProducts = snapProducts.val()?.filter(item => item.productId !== productId);
 
                         db.ref('Order/' + snap.key).child('Products').set(newProducts);
                     });
@@ -148,9 +148,41 @@ export function changeProductCountIntoOrder(userId, productId, isIncreased) {
         dispatch(requestChangeProductCount());
 
         try {
-            //let response = await profilesAPI.getProfile(id);
+            const order = db.ref('Order');
 
-            dispatch(receiveChangeProductCount())
+            order.orderByChild("userId").equalTo(userId).on(
+                'child_added', snap => {
+
+                    let products = db.ref('Order/' + snap.key + '/Products')
+
+                    products.once('value', snapProducts => {
+
+                        let oldProducts = snapProducts.val();
+
+                        let currentProduct = oldProducts?.filter(item => item.productId === productId);
+
+                        if (currentProduct[0].count === 1 && !isIncreased) { //remove product if hes count could be less then 1
+
+                            let updateProducts = snapProducts.val()?.filter(item => item.productId !== productId);
+
+                            db.ref('Order/' + snap.key).child('Products').set(updateProducts);
+                        }
+                        else { // change count
+                            let updateProducts = oldProducts.map(product => (
+                                product.productId === productId ? product = {
+                                    ...product,
+                                    count: isIncreased ? ++product.count : --product.count
+                                } : product
+                                ))
+
+                            db.ref('Order/' + snap.key).child('Products').set(updateProducts);
+                        }
+                    });
+                }
+            );
+
+            dispatch(receiveChangeProductCount());
+            dispatch(getOrder(userId));
         } catch (error) {
 
             dispatch(errorChangeProductCount(error));
