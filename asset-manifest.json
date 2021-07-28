@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/CoffeeOrder/static/css/main.fad1ac71.chunk.css",
-    "main.js": "/CoffeeOrder/static/js/main.096900d3.chunk.js",
-    "main.js.map": "/CoffeeOrder/static/js/main.096900d3.chunk.js.map",
+    "main.js": "/CoffeeOrder/static/js/main.5a7efce3.chunk.js",
+    "main.js.map": "/CoffeeOrder/static/js/main.5a7efce3.chunk.js.map",
     "runtime-main.js": "/CoffeeOrder/static/js/runtime-main.c2319f93.js",
     "runtime-main.js.map": "/CoffeeOrder/static/js/runtime-main.c2319f93.js.map",
-    "static/js/2.299ae9da.chunk.js": "/CoffeeOrder/static/js/2.299ae9da.chunk.js",
-    "static/js/2.299ae9da.chunk.js.map": "/CoffeeOrder/static/js/2.299ae9da.chunk.js.map",
+    "static/js/2.9f501397.chunk.js": "/CoffeeOrder/static/js/2.9f501397.chunk.js",
+    "static/js/2.9f501397.chunk.js.map": "/CoffeeOrder/static/js/2.9f501397.chunk.js.map",
     "index.html": "/CoffeeOrder/index.html",
     "static/css/main.fad1ac71.chunk.css.map": "/CoffeeOrder/static/css/main.fad1ac71.chunk.css.map",
-    "static/js/2.299ae9da.chunk.js.LICENSE.txt": "/CoffeeOrder/static/js/2.299ae9da.chunk.js.LICENSE.txt"
+    "static/js/2.9f501397.chunk.js.LICENSE.txt": "/CoffeeOrder/static/js/2.9f501397.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.c2319f93.js",
-    "static/js/2.299ae9da.chunk.js",
+    "static/js/2.9f501397.chunk.js",
     "static/css/main.fad1ac71.chunk.css",
-    "static/js/main.096900d3.chunk.js"
+    "static/js/main.5a7efce3.chunk.js"
   ]
 }
