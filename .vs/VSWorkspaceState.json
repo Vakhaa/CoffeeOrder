@@ -2,12 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\client",
+    "\\client\\public",
     "\\client\\src",
     "\\client\\src\\Components",
-    "\\client\\src\\Components\\Order",
+    "\\client\\src\\Components\\Menu",
     "\\client\\src\\Containers",
-    "\\client\\src\\DAL",
-    "\\client\\src\\DAL\\Firebase",
     "\\client\\src\\Redux",
     "\\client\\src\\Redux\\Actions",
     "\\client\\src\\Redux\\Reducers"

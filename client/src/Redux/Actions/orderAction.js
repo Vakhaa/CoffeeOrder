@@ -17,9 +17,8 @@ import {
 }
     from './actionTypes'
 
-import firebase from '../../DAL/Firebase';
-
-const db = firebase;
+import { database as db}  from '../../DAL/Firebase';
+import { storage } from '../../DAL/Firebase/index';
 
 export function cleanOrder() {
     return {
@@ -188,12 +187,40 @@ export function cancelOrder(userId) {
     }
 }
 
-export function submitOrder(userId) {
+export function submitOrder(userId, order) {
     return async (dispatch) => {
         dispatch(requestSubmitOrder());
 
         try {
-            //let response = await profilesAPI.getProfile(id);
+
+            // convert your object into a JSON-string
+            let jsonString = JSON.stringify(order);
+            console.log(jsonString);
+            // create a Blob from the JSON-string
+            let blob = new Blob([jsonString], { type: "application/json" })
+
+            storage.ref('orders/order ' + userId + '.json').put(blob).on('state_changed', snap => {
+                console.log(snap.state);
+            });
+
+           let orderDb =  db.ref('Order');            
+
+            orderDb.orderByChild("userId").equalTo(userId).once(
+                'child_added', snap => {
+
+                    let newOrder = {
+                        ...order,
+                        Products: order?.Products.map(product => (
+                            product = {
+                                productId: product.id,
+                                count: product.count
+                            })),
+                        isSubmit: true
+                    }
+
+                    db.ref('Order/' + snap.key).set(newOrder);
+                }
+            );
 
             dispatch(receiveSubmitOrder())
         } catch (error) {

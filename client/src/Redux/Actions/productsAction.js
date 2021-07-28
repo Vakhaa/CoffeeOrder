@@ -4,9 +4,7 @@ import {
     GET_PRODUCTS_ERROR
 }from './actionTypes'
 
-import firebase from '../../DAL/Firebase';
-
-const db = firebase;
+import { database as db } from '../../DAL/Firebase';
 
 let requestProducts = () => {
     return {

@@ -12,11 +12,8 @@ import {
     CHANGE_COUNT_PRODUCT_INTO_ORDER_ERROR
 } from './actionTypes'
 
-import firebase from '../../DAL/Firebase';
+import { database as db } from '../../DAL/Firebase';
 import { getOrder } from './orderAction';
-
-const db = firebase;
-
 
 export function requestAddProduct() {
     return {
@@ -120,7 +117,7 @@ export function deleteProduct(userId, productId) {
         try {
             const order = db.ref('Order');
             
-            order.orderByChild("userId").equalTo(userId).on(
+            order.orderByChild("userId").equalTo(userId).once(
                 'child_added', snap => {
                     
                     let products = db.ref('Order/' + snap.key + '/Products');
@@ -129,7 +126,7 @@ export function deleteProduct(userId, productId) {
 
                         let newProducts = snapProducts.val()?.filter(item => item.productId !== productId);
 
-                        db.ref('Order/' + snap.key).child('Products').set(newProducts);
+                        db.ref('Order/' + snap.key + '/Products').set(newProducts);
                     });
                 }
             );
@@ -159,29 +156,34 @@ export function changeProductCountIntoOrder(userId, productId, isIncreased) {
 
                         let oldProducts = snapProducts.val();
 
-                        let currentProduct = oldProducts?.filter(item => item.productId === productId);
+                        if (oldProducts) {
+                            let currentProduct = oldProducts?.filter(item => item.productId === productId);
 
-                        if (currentProduct[0].count === 1 && !isIncreased) { //remove product if hes count could be less then 1
+                            if ((currentProduct ? currentProduct[0].count === 1 : false) && !isIncreased) { //remove product if hes count could be less then 1
 
-                            let updateProducts = snapProducts.val()?.filter(item => item.productId !== productId);
+                                let updateProducts = snapProducts.val()?.filter(item => item.productId !== productId);
 
-                            db.ref('Order/' + snap.key).child('Products').set(updateProducts);
-                        }
-                        else { // change count
-                            let updateProducts = oldProducts.map(product => (
-                                product.productId === productId ? product = {
-                                    ...product,
-                                    count: isIncreased ? ++product.count : --product.count
-                                } : product
+                                db.ref('Order/' + snap.key).child('Products').set(updateProducts);
+                            }
+                            else { // change count
+                                let updateProducts = oldProducts.map(product => (
+                                    product.productId === productId ? product = {
+                                        ...product,
+                                        count: isIncreased ? ++product.count : --product.count
+                                    } : product
                                 ))
 
-                            db.ref('Order/' + snap.key).child('Products').set(updateProducts);
+                                db.ref('Order/' + snap.key + '/Products').set(updateProducts);
+                            }
+
+                            dispatch(receiveChangeProductCount());
+                        } else {
+                            dispatch(errorChangeProductCount());
                         }
                     });
                 }
             );
 
-            dispatch(receiveChangeProductCount());
             dispatch(getOrder(userId));
         } catch (error) {
 

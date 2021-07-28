@@ -28,11 +28,21 @@ const OrderContainer = (props) => {
         if (props.profile ? true : false) props.getOrder(props.profile.id);
     }, [props.profile]);
 
-    return <Order order={order} totalPrice={totalPrice}
-        submitOrder={props.submitOrder} cancelOrder={props.cancelOrder}
-        changeCount={props.changeCount} deleteProduct={props.deleteProduct}
-        isEditMode={props.profile ? true : false} profile={props.profile}
-    />;;
+    const orderComplete = () => {
+        return <div>
+            <p>Thank you for complete order. The total cost is {props.totalPrice} tugrikow.</p>
+                  <button onMouseEnter={() => alert("*coming soon*")}>Make a new order</button>
+        </div>
+    }
+
+    const orderComponent = () => {
+        return <Order order={order} totalPrice={totalPrice}
+            submitOrder={props.submitOrder} cancelOrder={props.cancelOrder}
+            changeCount={props.changeCount} deleteProduct={props.deleteProduct}
+            isEditMode={props.profile ? true : false} profile={props.profile}/>
+    }
+
+    return props.order?.isSubmit ? orderComplete() : orderComponent();
 }
 
 const mapStateToProps = state => {
@@ -44,7 +54,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        submitOrder: (userId) => dispatch(submitOrder(userId)),
+        submitOrder: (userId, order) => dispatch(submitOrder(userId, order)),
         cancelOrder: (userId) => dispatch(cancelOrder(userId)),
         getOrder: (userId) => dispatch(getOrder(userId)),
         changeCount: (userId, productId, isIncreased) => dispatch(changeProductCountIntoOrder(userId, productId, isIncreased)),
