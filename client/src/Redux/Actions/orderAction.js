@@ -223,6 +223,7 @@ export function submitOrder(userId, order) {
             );
 
             dispatch(receiveSubmitOrder())
+            dispatch(getOrder(userId))
         } catch (error) {
 
             dispatch(errorSubmitOrder(error));

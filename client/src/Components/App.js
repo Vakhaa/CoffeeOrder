@@ -6,7 +6,7 @@ function App() {
   return (
       <div className="App">
           <HeaderContainer />
-          <div className="Body">
+          <div className="Body container">
               <MenuContainer />
               <OrderContainer />
           </div>

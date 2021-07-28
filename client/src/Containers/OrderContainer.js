@@ -32,9 +32,9 @@ const OrderContainer = (props) => {
     }, [props.profile]);
 
     const orderComplete = () => {
-        return <div className="BodyMainBlocks">
-            <p className="BodySecondBlocks">Thank you for complete order. The total cost is {totalPrice} tugrikow.</p>
-                  <button onMouseEnter={() => alert("*coming soon*")}>Make a new order</button>
+        return <div className="congratulation">
+            <div className="item Product">Thank you for complete order. The total cost is {totalPrice} tugrikow.</div>
+            <button className="item Product" onMouseEnter={() => alert("*coming soon*")}>Make a new order</button>
         </div>
     }
 
@@ -45,7 +45,7 @@ const OrderContainer = (props) => {
             isEditMode={props.profile ? true : false} profile={props.profile}/>
     }
 
-    return props.order?.isSubmit ? orderComplete() : orderComponent();
+    return order?.isSubmit ? orderComplete() : orderComponent();
 }
 
 const mapStateToProps = state => {

@@ -3,12 +3,14 @@ import '../../index.css';
 let Order = (props) => {
 
   return (
-      <div className="Order BodyMainBlocks">
-          <p>Order</p>
-          <div className="container">
+      <div className="Order container">
+
+          <h3>Order</h3>
+
+          <div >
               {
                   props.order?.Products ? props.order.Products.map(product => (
-                      <div className="product" key={product.id}>
+                      <div className="item Product" key={product.id}>
                           <button onClick={() => props.deleteProduct(props.profile.id, product.id)} disabled={props.order?.isSubmit}>x</button>
                           
                           {product.title}
@@ -20,11 +22,19 @@ let Order = (props) => {
                           {product.price}
 
                       </div>
-                  )) :"Empty"
+                  )) : <div className="item Product">Empty</div>
               }
-              <div>Total : {props.totalPrice}</div>
-              <button onClick={() => props.cancelOrder(props.profile.id)} disabled={!props.isEditMode || props.order?.isSubmit}> Cancel </button>
-              <button onClick={() => props.submitOrder(props.profile.id, props.order)} disabled={!props.isEditMode || props.order?.isSubmit}> Submit </button>
+              <div className="item Product">Total : {props.totalPrice}</div>
+              <div className="item">
+                  <button
+                      onClick={() => props.cancelOrder(props.profile.id)}
+                      disabled={!props.isEditMode || props.order?.isSubmit}>
+                      Cancel </button>
+                  <button
+                      onClick={() => props.submitOrder(props.profile.id, props.order)}
+                      disabled={!props.isEditMode || props.order?.isSubmit}>
+                      Submit </button>
+              </div>
           </div>
     </div>
   );

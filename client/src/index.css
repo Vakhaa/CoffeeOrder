@@ -1,38 +1,59 @@
 .Body {
+    display: flex;
     flex-direction: column;
     padding: 0;
     margin: 0;
 }
 
-.BodyMainBlocks {
+.container {
+    flex-direction: row;
     background-color: darkred;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
     color: white;
-    width:300px;
 }
 
-.container {
-    display: flex;
-    flex-flow: column nowrap;
-}
-
-.BodySecondBlocks {
-    background: tomato;
+.item {
+    align-items: center;
     padding: 5px;
     width: 200px;
     height: 50px;
     margin: 10px;
     color: white;
-    text-align: center;
 }
 
-.Menu{   
+.Product {
+    background: tomato;
+}
+
+.Products {
+    width: 300px;
+    height: 300px;
+}
+
+.Menu {
+    width: 300px;
+    height: 400px;
+    flex-direction: column;
+    padding-left: 20%;
 }
 
 .Order {
+    width: 300px;
+    height: 400px;
+    flex-direction: column;
+    padding-left: 20%;
 }
 
+.Header {
+    padding-left: 45%;
+}
 
+.congratulation {
+    padding-left: 20%;
+}
+
+body button {
+    margin-left: 5px;
+    margin-right: 3px;
+}
