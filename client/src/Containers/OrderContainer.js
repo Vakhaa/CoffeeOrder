@@ -5,6 +5,9 @@ import Order from '../Components/Order/Order';
 import { cancelOrder,  getOrder, submitOrder } from '../Redux/Actions/orderAction';
 import { changeProductCountIntoOrder, deleteProduct} from '../Redux/Actions/productAction';
 
+import '../index.css';
+
+
 const OrderContainer = (props) => {
 
     let [order, setOrder] = useState(props.order);
@@ -29,8 +32,8 @@ const OrderContainer = (props) => {
     }, [props.profile]);
 
     const orderComplete = () => {
-        return <div>
-            <p>Thank you for complete order. The total cost is {props.totalPrice} tugrikow.</p>
+        return <div className="BodyMainBlocks">
+            <p className="BodySecondBlocks">Thank you for complete order. The total cost is {totalPrice} tugrikow.</p>
                   <button onMouseEnter={() => alert("*coming soon*")}>Make a new order</button>
         </div>
     }

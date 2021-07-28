@@ -3,7 +3,7 @@ import '../../index.css';
 let Order = (props) => {
 
   return (
-      <div className="Order">
+      <div className="Order BodyMainBlocks">
           <p>Order</p>
           <div className="container">
               {

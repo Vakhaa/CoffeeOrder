@@ -2,13 +2,13 @@ import '../../index.css';
 
 let Menu = ({ products, addProduct, userId, isEditMode}) => {
   return (
-      <div className="Menu">
+      <div className="Menu  BodyMainBlocks">
           <p>Menu</p>
           <div className="container">
           {
 
                   products.map((product) => (
-                  <div className="product" key={product.id}>
+                      <div className="BodySecondBlocks" key={product.id}>
                           {product.title}  {product.price}
                           <button onClick={() => addProduct(userId, product.id)} disabled={!isEditMode || product.isInOrder}>+</button>
                   </div>
